@@ -38,7 +38,7 @@ try {
     $std = new \stdClass();
     $std->version = '1'; //opcional
     $std->numero = 11; //obrigatorio
-    $std->serie = '1'; //obrigatorio
+    $std->serie = 'U1'; //obrigatorio
     $std->tipo = 'RPS'; //obrigatorio //RPS RPS-C RPS-M 
     $std->dataemissao = '2018-10-31'; //obrigatorio
     $std->status = 'N'; //N - normal C- cancelado obrigatorio
@@ -58,7 +58,7 @@ try {
 
     $std->codigoservico = '2658';
     $std->discriminacao = 'Detalhes do serviço';
-    $std->valorservicos = 100.00;
+    $std->valorservicos = 100.25;
     $std->valordeducoes = 0.00;
     $std->valorpis = 10.00;
     $std->valorcofins = 10.00;
@@ -82,7 +82,7 @@ try {
     $std->tomador->email = 'tomador@uol.com.br';
 
     $std->tomador->endereco = new \stdClass();
-    $std->tomador->endereco->tipologradouro = 'Av';
+    $std->tomador->endereco->tipologradouro = null;
     $std->tomador->endereco->logradouro = 'Paulista';
     $std->tomador->endereco->numero = '100';
     $std->tomador->endereco->complemento = 'Cj 35';
