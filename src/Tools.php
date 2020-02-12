@@ -323,7 +323,7 @@ class Tools extends BaseTools
             . "<dtFim>{$dtFim}</dtFim>"
             . "<QtdRPS>{$qtdRps}</QtdRPS>"
             . "<ValorTotalServicos>{$valorTotServicos}</ValorTotalServicos>"
-            . "<ValorTotalDeducoes>{$valorTotServicos}</ValorTotalDeducoes>"
+            . "<ValorTotalDeducoes>{$valorTotDeducoes}</ValorTotalDeducoes>"
             . "</Cabecalho>"
             . $txtRps
             . "</PedidoEnvioLoteRPS>";
@@ -396,6 +396,11 @@ class Tools extends BaseTools
         return $this->send($content, $operation, $mode);
     }
     
+    /**
+     * Assina
+     * @param type $numero
+     * @return type
+     */
     private function signStrCancel($numero)
     {
         $im = str_pad($this->config->im, 8, '0', STR_PAD_LEFT);
@@ -455,11 +460,21 @@ class Tools extends BaseTools
         return $content;
     }
 
+    /**
+     * Localiza a maior data em um Array com as datas de emissão
+     * @param array $dt
+     * @return string
+     */
     protected function maxDate(array $dt)
     {
         return max($dt);
     }
     
+    /**
+     * Localiza a menor data em um Array com as datas de emissão
+     * @param array $dt
+     * @return string
+     */
     protected function minDate(array $dt)
     {
         return min($dt);
