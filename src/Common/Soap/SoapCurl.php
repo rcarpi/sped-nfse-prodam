@@ -57,7 +57,7 @@ class SoapCurl extends SoapBase implements SoapInterface
         //remover apos os testes
         $ts = time();
         $name = str_replace('http://www.prefeitura.sp.gov.br/nfe/ws/', '', $action);
-        file_put_contents("/var/www/sped/sped-nfse-prodam/local/fixtures/req_{$name}_{$ts}.xml", $envelope);
+        //file_put_contents("/var/www/sped/sped-nfse-prodam/local/fixtures/req_{$name}_{$ts}.xml", $envelope);
         
         try {
             $this->saveTemporarilyKeyFiles();
@@ -118,7 +118,7 @@ class SoapCurl extends SoapBase implements SoapInterface
         }
         
         //remover apos os testes
-        file_put_contents("/var/www/sped/sped-nfse-prodam/local/fixtures/res_{$name}_{$ts}.xml", $this->responseBody);
+        //file_put_contents("/var/www/sped/sped-nfse-prodam/local/fixtures/res_{$name}_{$ts}.xml", $this->responseBody);
         
         return $this->responseBody;
     }
