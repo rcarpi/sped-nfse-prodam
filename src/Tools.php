@@ -82,7 +82,6 @@ class Tools extends BaseTools
         );
         
         Validator::isValid($content, $this->xsdpath . '/PedidoConsultaCNPJ_v01.xsd');
-        //file_put_contents(__DIR__ . '/../local/fixtures/pedido_consulta_cnpj_assinado.xml', $content);
         return $this->send($content, $operation, $mode);
     }
     
@@ -101,10 +100,8 @@ class Tools extends BaseTools
         $operation = "ConsultaNFeEmitidas";
         $mode = 'sincrono';
         $content = $this->consulta($dtInicial, $dtFinal, $pagina);
-        //file_put_contents(__DIR__ . '/../local/fixtures/pedido_consulta_nfse_periodo_assinado.xml', $content);
         return $this->send($content, $operation, $mode);
     }
-
 
     /**
      * Consulta NFSe recebidas determinado periodo (SINCRONO)
@@ -121,7 +118,6 @@ class Tools extends BaseTools
         $operation = "ConsultaNFeRecebidas";
         $mode = "sincrono";
         $content = $this->consulta($dtInicial, $dtFinal, $pagina);
-        //file_put_contents(__DIR__ . '/../local/fixtures/pedido_consulta_nfse_recebidas_assinado.xml', $content);
         return $this->send($content, $operation, $mode);
     }
 
@@ -190,10 +186,8 @@ class Tools extends BaseTools
             $content
         );
         Validator::isValid($content, $this->xsdpath . '/PedidoConsultaNFe_v01.xsd');
-        //file_put_contents(__DIR__ . '/../local/fixtures/pedido_consulta_nfse_assinado.xml', $content);
         return $this->send($content, $operation, $mode);
     }
-
 
     /**
      * Consulta de Lote de RPS  (SINCRONO)
@@ -230,7 +224,6 @@ class Tools extends BaseTools
             $content
         );
         Validator::isValid($content, $this->xsdpath . '/PedidoConsultaLote_v01.xsd');
-        //file_put_contents(__DIR__ . '/../local/fixtures/pedido_consulta_lote_assinado.xml', $content);
         return $this->send($content, $operation, $mode);
     }
     
@@ -270,7 +263,25 @@ class Tools extends BaseTools
             $content
         );
         Validator::isValid($content, $this->xsdpath . '/PedidoInformacoesLote_v01.xsd');
-        //file_put_contents(__DIR__ . '/../local/fixtures/pedido_consulta_informacao_lote_assinado.xml', $content);
+        return $this->send($content, $operation, $mode);
+    }
+    
+    public function consultarSituacaoLoteRps($protocolo)
+    {
+        $operation = "ConsultaSituacaoLote";
+        $mode = "assincrono";
+        
+        $content = "<PedidoConsultaSituacaoLote "
+            . "xmlns:xsd=\"{$this->nsxsd}\" "
+            . "xmlns:xsi=\"{$this->nsxsi}\" "
+            . "xmlns=\"{$this->wsobj->msgns}\">"
+            . "<CPFCNPJRemetente xmlns=\"\">"
+            . "<CNPJ>{$this->config->cnpj}</CNPJ>"
+            . "</CPFCNPJRemetente>"
+            . "<NumeroProtocolo xmlns=\"\">{$protocolo}</NumeroProtocolo>"
+            . "</PedidoConsultaSituacaoLote>";
+            
+        Validator::isValid($content, $this->xsdpath . '/ConsultaSituacaoLoteAsync_v01.xsd');
         return $this->send($content, $operation, $mode);
     }
     
@@ -308,7 +319,7 @@ class Tools extends BaseTools
             $operation= "TesteEnvioLoteRPS";
             $mode = "sincrono";
             if (!$sincrono) {
-                $operation= "testeEnvioLoteRPSAsync";
+                $operation= "TesteEnvioLoteRPSAsync";
                 $mode = "assincrono";
             }
         }
@@ -343,8 +354,6 @@ class Tools extends BaseTools
             $content
         );
         Validator::isValid($content, $this->xsdpath . '/PedidoEnvioLoteRPS_v01.xsd');
-        //file_put_contents(__DIR__ . "/../local/fixtures/"
-        //    . "pedido_envio_lote_{$this->config->tpamb}_{$mode}_assinado.xml", $content);
         return $this->send($content, $operation, $mode);
     }
     
@@ -392,7 +401,6 @@ class Tools extends BaseTools
             $content
         );
         Validator::isValid($content, $this->xsdpath . '/PedidoCancelamentoNFe_v01.xsd');
-        //file_put_contents(__DIR__ . "/../local/fixtures/pedido_cancelamento_nfse__assinado.xml", $content);
         return $this->send($content, $operation, $mode);
     }
     

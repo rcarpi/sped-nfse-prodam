@@ -290,50 +290,50 @@ class Factory
             false
         );
         
-        $int = $this->std->intermediario;
-        if (!empty($int->cnpj) || !empty($int->cpf)) {
-            $node = $this->dom->createElement('CPFCNPJIntermediario');
-            if (!empty($int->cnpj)) {
-                $this->dom->addChild(
-                    $node,
-                    "CNPJ",
-                    !empty($int->cnpj) ? $int->cnpj : null,
-                    false
-                );
-            } else {
-                $this->dom->addChild(
-                    $node,
-                    "CPF",
-                    !empty($int->cpf) ? $int->cpf : null,
-                    false
-                );
+        if (!empty($this->std->intermediario)) {
+            $int = $this->std->intermediario;
+            if (!empty($int->cnpj) || !empty($int->cpf)) {
+                $node = $this->dom->createElement('CPFCNPJIntermediario');
+                if (!empty($int->cnpj)) {
+                    $this->dom->addChild(
+                        $node,
+                        "CNPJ",
+                        !empty($int->cnpj) ? $int->cnpj : null,
+                        false
+                    );
+                } else {
+                    $this->dom->addChild(
+                        $node,
+                        "CPF",
+                        !empty($int->cpf) ? $int->cpf : null,
+                        false
+                    );
+                }
+                $this->rps->appendChild($node);
             }
-            $this->rps->appendChild($node);
+            $this->dom->addChild(
+                $this->rps,
+                "InscricaoMunicipalIntermediario",
+                !empty($int->im) ? $int->im : null,
+                false
+            );
+            $iss = null;
+            if (isset($int->issretido)) {
+                $iss = ($int->issretido == false) ? "false" : "true";
+            }
+            $this->dom->addChild(
+                $this->rps,
+                "ISSRetidoIntermediario",
+                $iss,
+                false
+            );
+            $this->dom->addChild(
+                $this->rps,
+                "EmailIntermediario",
+                !empty($int->email) ? $int->email : null,
+                false
+            );
         }
-        $this->dom->addChild(
-            $this->rps,
-            "InscricaoMunicipalIntermediario",
-            !empty($int->im) ? $int->im : null,
-            false
-        );
-        
-        $iss = null;
-        if (isset($int->issretido)) {
-            $iss = ($int->issretido == false) ? "false" : "true";
-        }
-        $this->dom->addChild(
-            $this->rps,
-            "ISSRetidoIntermediario",
-            $iss,
-            false
-        );
-        $this->dom->addChild(
-            $this->rps,
-            "EmailIntermediario",
-            !empty($int->email) ? $int->email : null,
-            false
-        );
-
         
         $this->dom->addChild(
             $this->rps,
@@ -341,33 +341,37 @@ class Factory
             $this->std->discriminacao,
             true
         );
+        
+        if (!empty($this->std->construcaocivil)) {
+            $this->dom->addChild(
+                $this->rps,
+                "CodigoCEI",
+                $this->std->construcaocivil->codigoobra,
+                false
+            );
+            $this->dom->addChild(
+                $this->rps,
+                "MatriculaObra",
+                $this->std->construcaocivil->matricula,
+                false
+            );
+            $this->dom->addChild(
+                $this->rps,
+                "MunicipioPrestacao",
+                $this->std->construcaocivil->municipioprestacao,
+                false
+            );
+            $this->dom->addChild(
+                $this->rps,
+                "NumeroEncapsulamento",
+                $this->std->construcaocivil->numeroencapsulamento,
+                false
+            );
+        }
+        
         $this->dom->addChild(
             $this->rps,
-            "CodigoCEI",
-            $this->std->construcaocivil->codigoobra,
-            false
-        );
-        $this->dom->addChild(
-            $this->rps,
-            "MatriculaObra",
-            $this->std->construcaocivil->matricula,
-            false
-        );
-        $this->dom->addChild(
-            $this->rps,
-            "MunicipioPrestacao",
-            $this->std->construcaocivil->municipioprestacao,
-            false
-        );
-        $this->dom->addChild(
-            $this->rps,
-            "NumeroEncapsulamento",
-            $this->std->construcaocivil->numeroencapsulamento,
-            false
-        );
-        $this->dom->addChild(
-            $this->rps,
-            "ValorTotalRecebid",
+            "ValorTotalRecebido",
             $this->std->valortotalrecebido,
             false
         );

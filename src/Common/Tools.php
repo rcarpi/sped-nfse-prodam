@@ -116,7 +116,7 @@ class Tools
      */
     public function send($message, $operation, $mode)
     {
-        $action = "{$this->wsobj->soapns}/ws/$operation";
+        $action = "{$this->wsobj->soapns}/ws/". lcfirst($operation);
         if ($operation == 'TesteEnvioLoteRPS') {
             $action = "{$this->wsobj->soapns}/ws/testeenvio";
         }
@@ -129,7 +129,7 @@ class Tools
             throw new \Exception("Não está registrada a URL para o ambiente "
             . "de {$this->environment} desse municipio.");
         }
-        $request = $this->createSoapRequest($message, $operation);
+        $request = $this->createSoapRequest($message, $operation, $mode);
         $this->lastRequest = $request;
 
         if (empty($this->soap)) {
@@ -167,14 +167,19 @@ class Tools
      */
     protected function extractContentFromResponse($response, $operation)
     {
+        //verifica se está em modo FAKE
+        if (substr($response, 0, 1) == '{') {
+            return $response;
+        }
+        $response = str_replace('&lt;?xml version="1.0" encoding="UTF-8"?&gt;', '', $response);
+        $response = str_replace(['&lt;', '&gt;'], ['<', '>'], $response);
         $dom = new \DOMDocument();
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = false;
         $dom->loadXML($response);
         if (!empty($dom->getElementsByTagName('RetornoXML')->item(0))) {
             $node = $dom->getElementsByTagName('RetornoXML')->item(0);
-            $text = str_replace("ISO-8859-1", "UTF-8", $node->textContent);
-            return Strings::normalize($text);
+            return $dom->saveXML($node);
         }
         return $response;
     }
@@ -183,17 +188,23 @@ class Tools
      * Build SOAP request
      * @param string $message
      * @param string $operation
+     * @param string $mode
      * @return string XML SOAP request
      */
-    protected function createSoapRequest($message, $operation)
+    protected function createSoapRequest($message, $operation, $mode)
     {
+        $operation = str_replace('Async', '', $operation);
+        $versionText = "VersaoSchema";
+        if ($mode == 'assincrono') {
+            $versionText = "versaoSchema";
+        }
         //$cdata = htmlspecialchars($message, ENT_NOQUOTES);
         $env = "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" "
             . "xmlns:nfe=\"{$this->wsobj->soapns}\">"
             . "<soap:Header/>"
             . "<soap:Body>"
             . "<nfe:{$operation}Request>"
-            . "<nfe:VersaoSchema>{$this->wsobj->version}</nfe:VersaoSchema>"
+            . "<nfe:{$versionText}>{$this->wsobj->version}</nfe:{$versionText}>"
             . "<nfe:MensagemXML></nfe:MensagemXML>"
             . "</nfe:{$operation}Request>"
             . "</soap:Body>"

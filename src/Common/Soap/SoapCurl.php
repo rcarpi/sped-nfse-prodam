@@ -54,11 +54,6 @@ class SoapCurl extends SoapBase implements SoapInterface
         $this->requestHead = implode("\n", $parameters);
         $this->requestBody = $envelope;
         
-        //remover apos os testes
-        $ts = time();
-        $name = str_replace('http://www.prefeitura.sp.gov.br/nfe/ws/', '', $action);
-        //file_put_contents("/var/www/sped/sped-nfse-prodam/local/fixtures/req_{$name}_{$ts}.xml", $envelope);
-        
         try {
             $this->saveTemporarilyKeyFiles();
             $oCurl = curl_init();
@@ -116,10 +111,6 @@ class SoapCurl extends SoapBase implements SoapInterface
                 . $this->getFaultString($this->responseBody)
             );
         }
-        
-        //remover apos os testes
-        //file_put_contents("/var/www/sped/sped-nfse-prodam/local/fixtures/res_{$name}_{$ts}.xml", $this->responseBody);
-        
         return $this->responseBody;
     }
     
