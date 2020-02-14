@@ -266,6 +266,11 @@ class Tools extends BaseTools
         return $this->send($content, $operation, $mode);
     }
     
+    /**
+     * Consulta Situação do Lote de RPS (ASSINCRONO)
+     * @param string $protocolo
+     * @return string
+     */
     public function consultarSituacaoLoteRps($protocolo)
     {
         $operation = "ConsultaSituacaoLote";
@@ -281,7 +286,7 @@ class Tools extends BaseTools
             . "<NumeroProtocolo xmlns=\"\">{$protocolo}</NumeroProtocolo>"
             . "</PedidoConsultaSituacaoLote>";
             
-        Validator::isValid($content, $this->xsdpath . '/ConsultaSituacaoLoteAsync_v01.xsd');
+        //Validator::isValid($content, $this->xsdpath . '/ConsultaSituacaoLoteAsync_v01.xsd');
         return $this->send($content, $operation, $mode);
     }
     
@@ -416,7 +421,6 @@ class Tools extends BaseTools
         $signature = base64_encode($this->certificate->sign($im . $num, OPENSSL_ALGO_SHA1));
         return $signature;
     }
-
 
     /**
      * Monta a consulta por periodo para emitidas ou recebidas
