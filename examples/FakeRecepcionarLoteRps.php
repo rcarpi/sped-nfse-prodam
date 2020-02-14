@@ -106,7 +106,7 @@ try {
     
     $arps[] = new Rps($std);
 
-    $sincrono = true;
+    $sincrono = false;
     $response = $tools->recepcionarLoteRps($arps, $sincrono);
 
     echo FakePretty::prettyPrint($response, '');

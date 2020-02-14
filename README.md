@@ -1,6 +1,6 @@
 # sped-nfse-prodam
 
-## ALPHA-TESTS
+## BETHA-TESTS
 
 ## Este pacote atende o provedor Prodam São Paulo SP
 
