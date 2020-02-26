@@ -171,15 +171,21 @@ class Tools
         if (substr($response, 0, 1) == '{') {
             return $response;
         }
-        $response = str_replace('&lt;?xml version="1.0" encoding="UTF-8"?&gt;', '', $response);
-        $response = str_replace(['&lt;', '&gt;'], ['<', '>'], $response);
+        $exceptOperations = ['ConsultaSituacaoLote', 'TesteEnvioLoteRPSAsync'];
+        if (in_array($operation, $exceptOperations)) {
+            $response = str_replace('&lt;?xml version="1.0" encoding="UTF-8"?&gt;', '', $response);
+            $response = str_replace(['&lt;', '&gt;'], ['<', '>'], $response);
+        }
         $dom = new \DOMDocument();
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = false;
         $dom->loadXML($response);
         if (!empty($dom->getElementsByTagName('RetornoXML')->item(0))) {
             $node = $dom->getElementsByTagName('RetornoXML')->item(0);
-            return $dom->saveXML($node);
+            if (in_array($operation, $exceptOperations)) {
+                return $response;
+            }
+            return $node->textContent;
         }
         return $response;
     }
