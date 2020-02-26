@@ -39,12 +39,13 @@ class Standardize
         'ConsultaNFeEmitidasRequest',
         'ConsultaNFeRecebidasRequest',
         'ConsultaNFesRequest',
-        'RetornoInformacoesLote',
-        'RetornoConsultaCNPJ',
-        'RetornoConsulta',
         'PedidoConsultaCNPJ',
         'PedidoConsultaNFe',
         'PedidoConsultaNFePeriodo',
+        'RetornoConsultaCNPJ',
+        'RetornoInformacoesLote',
+        'RetornoConsulta',
+        'RetornoEnvioLoteRPS',
         'RetornoXML',
         'RPS'
     ];
