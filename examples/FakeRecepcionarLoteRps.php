@@ -43,18 +43,18 @@ try {
     $std->dataemissao = '2018-10-31'; //obrigatorio
     $std->status = 'N'; //N - normal C- cancelado obrigatorio
     $std->tributacao = 'T'; //T – Tributado em São Paulo
-    //F – Tributado Fora de São Paulo
-    //A – Tributado em São Paulo, porém Isento
-    //B – Tributado Fora de São Paulo, porém Isento
-    //D – Tributado em São Paulo com isenção parcial
-    //M - Tributado em São Paulo, porém com indicação de imunidade subjetiva
-    //N - Tributado fora de São Paulo, porém com indicação de imunidade subjetiva
-    //R - Tributado em São Paulo, porém com indicação de imunidade objetiva
-    //S - Tributado fora de São Paulo, porém com indicação de imunidade objetiva
-    //X –Tributado em São Paulo, porém Exigibilidade Suspensa
-    //V –Tributado Fora de São Paulo, porém Exigibilidade Suspensa
-    //P – Exportação de Serviços
-    //C – Cancelado
+                            //F – Tributado Fora de São Paulo
+                            //A – Tributado em São Paulo, porém Isento
+                            //B – Tributado Fora de São Paulo, porém Isento
+                            //D – Tributado em São Paulo com isenção parcial
+                            //M - Tributado em São Paulo, porém com indicação de imunidade subjetiva
+                            //N - Tributado fora de São Paulo, porém com indicação de imunidade subjetiva
+                            //R - Tributado em São Paulo, porém com indicação de imunidade objetiva
+                            //S - Tributado fora de São Paulo, porém com indicação de imunidade objetiva
+                            //X –Tributado em São Paulo, porém Exigibilidade Suspensa
+                            //V –Tributado Fora de São Paulo, porém Exigibilidade Suspensa
+                            //P – Exportação de Serviços
+                            //C – Cancelado
 
     $std->codigoservico = '2658';
     $std->discriminacao = 'Detalhes do serviço';
