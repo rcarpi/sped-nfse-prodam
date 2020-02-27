@@ -44,6 +44,7 @@ class Standardize
         'PedidoConsultaNFePeriodo',
         'RetornoConsultaCNPJ',
         'RetornoInformacoesLote',
+        'RetornoConsultaSituacaoLote',
         'RetornoConsulta',
         'RetornoCancelamentoNFe',
         'RetornoEnvioLoteRPS',

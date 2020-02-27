@@ -1,5 +1,38 @@
 # Standarize
 
+## Retorno com Alerta
+
+```
+stdClass Object
+(
+    [Cabecalho] => stdClass Object
+        (
+            [attributes] => stdClass Object
+                (
+                    [Versao] => 1
+                )
+
+            [Sucesso] => true
+        )
+
+    [Alerta] => stdClass Object
+        (
+            [Codigo] => 1106
+            [Descricao] => NFS-e não encontrada.
+            [ChaveNFe] => stdClass Object
+                (
+                    [InscricaoPrestador] => 89444222
+                    [NumeroNFe] => 99992866
+                )
+
+        )
+
+)
+``` 
+
+
+
+
 ## Retorno Consulta de CNPJ
 
 ```
@@ -17,7 +50,7 @@ stdClass Object
 
     [Detalhe] => stdClass Object
         (
-            [InscricaoMunicipal] => 44712316
+            [InscricaoMunicipal] => 89444222
             [EmiteNFe] => true
         )
 
@@ -40,10 +73,10 @@ stdClass Object
             [InformacoesLote] => stdClass Object
                 (
                     [NumeroLote] => 555503838
-                    [InscricaoPrestador] => 44712316
+                    [InscricaoPrestador] => 89444222
                     [CPFCNPJRemetente] => stdClass Object
                         (
-                            [CNPJ] => 15087656000160
+                            [CNPJ] => 12345678901234
                         )
 
                     [DataEnvioLote] => 2019-12-02T10:36:10
@@ -79,7 +112,7 @@ stdClass Object
                 (
                     [ChaveNFe] => stdClass Object
                         (
-                            [InscricaoPrestador] => 44712316
+                            [InscricaoPrestador] => 89444222
                             [NumeroNFe] => 2865
                             [CodigoVerificacao] => MFT8YKDR
                         )
@@ -88,7 +121,7 @@ stdClass Object
                     [NumeroLote] => 555503838
                     [ChaveRPS] => stdClass Object
                         (
-                            [InscricaoPrestador] => 44712316
+                            [InscricaoPrestador] => 89444222
                             [SerieRPS] => stdClass Object
                                 (
                                 )
@@ -100,7 +133,7 @@ stdClass Object
                     [DataEmissaoRPS] => 2019-12-02
                     [CPFCNPJPrestador] => stdClass Object
                         (
-                            [CNPJ] => 15087656000160
+                            [CNPJ] => 12345678901234
                         )
 
                     [RazaoSocialPrestador] => PLANET REDE COMERCIO IMPORTACAO E SERVICOS EM INFORMATICA LT
@@ -178,7 +211,7 @@ stdClass Object
         (
             [ChaveNFe] => stdClass Object
                 (
-                    [InscricaoPrestador] => 44712316
+                    [InscricaoPrestador] => 89444222
                     [NumeroNFe] => 2866
                     [CodigoVerificacao] => ICTPDJLA
                 )
@@ -187,7 +220,7 @@ stdClass Object
             [NumeroLote] => 555503838
             [ChaveRPS] => stdClass Object
                 (
-                    [InscricaoPrestador] => 44712316
+                    [InscricaoPrestador] => 89444222
                     [SerieRPS] => stdClass Object
                         (
                         )
@@ -199,7 +232,7 @@ stdClass Object
             [DataEmissaoRPS] => 2019-12-02
             [CPFCNPJPrestador] => stdClass Object
                 (
-                    [CNPJ] => 15087656000160
+                    [CNPJ] => 12345678901234
                 )
 
             [RazaoSocialPrestador] => PLANET REDE COMERCIO IMPORTACAO E SERVICOS EM INFORMATICA LT
@@ -280,7 +313,7 @@ stdClass Object
                 (
                     [ChaveNFe] => stdClass Object
                         (
-                            [InscricaoPrestador] => 44712316
+                            [InscricaoPrestador] => 89444222
                             [NumeroNFe] => 2866
                             [CodigoVerificacao] => ICTPDJLA
                         )
@@ -289,7 +322,7 @@ stdClass Object
                     [NumeroLote] => 555503838
                     [ChaveRPS] => stdClass Object
                         (
-                            [InscricaoPrestador] => 44712316
+                            [InscricaoPrestador] => 89444222
                             [SerieRPS] => stdClass Object
                                 (
                                 )
@@ -301,7 +334,7 @@ stdClass Object
                     [DataEmissaoRPS] => 2019-12-02
                     [CPFCNPJPrestador] => stdClass Object
                         (
-                            [CNPJ] => 15087656000160
+                            [CNPJ] => 12345678901234
                         )
 
                     [RazaoSocialPrestador] => PLANET REDE COMERCIO IMPORTACAO E SERVICOS EM INFORMATICA LT
@@ -424,10 +457,10 @@ stdClass Object
             [ISSRetido] => false
             [CPFCNPJTomador] => stdClass Object
                 (
-                    [CNPJ] => 15087656000160
+                    [CNPJ] => 12345678901234
                 )
 
-            [InscricaoMunicipalTomador] => 44712316
+            [InscricaoMunicipalTomador] => 89444222
             [RazaoSocialTomador] => PLANET REDE COMERCIO IMPORTACAO E SERVICOS EM INFORMATICA LT
             [EnderecoTomador] => stdClass Object
                 (
@@ -467,10 +500,10 @@ stdClass Object
             [InformacoesLote] => stdClass Object
                 (
                     [NumeroLote] => 0
-                    [InscricaoPrestador] => 44712316
+                    [InscricaoPrestador] => 89444222
                     [CPFCNPJRemetente] => stdClass Object
                         (
-                            [CNPJ] => 15087656000160
+                            [CNPJ] => 12345678901234
                         )
 
                     [DataEnvioLote] => 2020-02-26T19:02:11
