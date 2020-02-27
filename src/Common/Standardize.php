@@ -45,7 +45,10 @@ class Standardize
         'RetornoConsultaCNPJ',
         'RetornoInformacoesLote',
         'RetornoConsulta',
+        'RetornoCancelamentoNFe',
         'RetornoEnvioLoteRPS',
+        'RetornoEnvioLoteRPSAsync',
+        'RetornoEnvioRPS',
         'RetornoXML',
         'RPS'
     ];
