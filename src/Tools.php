@@ -410,9 +410,9 @@ class Tools extends BaseTools
     }
     
     /**
-     * Assina
-     * @param type $numero
-     * @return type
+     * Assinatura adcional da string de cancelamento
+     * @param integer $numero
+     * @return string
      */
     private function signStrCancel($numero)
     {
