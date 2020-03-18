@@ -27,7 +27,10 @@
 
 ## Observações
 
+1. Somente existe um ambiente de homologação para a comunicação SINCRONA e é necessária a autorização de uso pela Prefeitura;
+2. Nos testes realizados, o ambiente ASSINCRONO **falha** retornando que desconhece o SOAP Action (provável problema interno do servidor); 
 
+> NOTA: use os métodos SINCRONOS, até que os problemas encontrados no método ASSINCRONO sejam resolvidos.
 
 ## Dependências
 

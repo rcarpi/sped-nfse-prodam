@@ -104,10 +104,10 @@ try {
     $std->construcaocivil->municipioprestacao = '3550308';
     $std->construcaocivil->numeroencapsulamento = '1234';
     
-    $arps[] = new Rps($std);
+    $rps = new Rps($std);
 
-    $sincrono = false;
-    $response = $tools->recepcionarLoteRps($arps, $sincrono);
+    
+    $response = $tools->envioRpsSincrono($rps);
 
     echo FakePretty::prettyPrint($response, '');
     

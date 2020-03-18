@@ -182,8 +182,8 @@ class SoapCurl extends SoapBase implements SoapInterface
         $dom->preserveWhiteSpace = false;
         $dom->loadXML($body);
         $faultstring = '';
-        $nodefault = !empty($dom->getElementsByTagName('faultstring')->item(0))
-            ? $dom->getElementsByTagName('faultstring')->item(0)
+        $nodefault = !empty($dom->getElementsByTagName('Text')->item(0))
+            ? $dom->getElementsByTagName('Text')->item(0)
             : '';
         if (!empty($nodefault)) {
             $faultstring = $nodefault->nodeValue;
