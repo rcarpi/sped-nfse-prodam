@@ -291,12 +291,11 @@ class Tools extends BaseTools
     }
     
     /**
-     * Enviar RPS ou Lote de RSP (SINCRONO) ou (ASSINCRONO)
-     * @param array $rpss
-     * @param bool $sincrono
+     * Envia Teste de Lote RPS (SINCRONO)
+     * @param array $rps
      * @return string
      */
-    public function recepcionarLoteRps(array $rpss = [], $sincrono = false)
+    public function envioTesteRpsSincrono(array $rpss)
     {
         $txtRps = "";
         $dt = [];
@@ -313,21 +312,9 @@ class Tools extends BaseTools
         }
         $dtInicio = $this->minDate($dt);
         $dtFim = $this->maxDate($dt);
-               
-        $operation= "EnvioLoteRps";
-        $mode = "sincrono";
-        if (!$sincrono) {
-            $operation= "EnvioLoteRpsAsync";
-            $mode = "assincrono";
-        }
-        if ($this->config->tpamb == 2) {
-            $operation= "TesteEnvioLoteRPS";
-            $mode = "sincrono";
-            if (!$sincrono) {
-                $operation= "TesteEnvioLoteRPSAsync";
-                $mode = "assincrono";
-            }
-        }
+        
+        $operation= "TesteEnvioLoteRPS";
+        
         $content = "<PedidoEnvioLoteRPS "
             . "xmlns:xsd=\"{$this->nsxsd}\" "
             . "xmlns:xsi=\"{$this->nsxsi}\" "
@@ -359,7 +346,230 @@ class Tools extends BaseTools
             $content
         );
         Validator::isValid($content, $this->xsdpath . '/PedidoEnvioLoteRPS_v01.xsd');
-        return $this->send($content, $operation, $mode);
+        return $this->send($content, $operation, 'sincrono');
+    }
+    
+    /**
+     * Envia lote RPS (Assincrono)
+     * @param array $rpss
+     * @return string
+     */
+    public function envioTesteRpsAssincrono(array $rpss)
+    {
+        $txtRps = "";
+        $dt = [];
+        $valorTotServicos = 0;
+        $valorTotDeducoes = 0;
+        $qtdRps = count($rpss);
+        foreach ($rpss as $rps) {
+            $rps->config($this->config);
+            $rps->addCertificate($this->certificate);
+            $dt[] = $rps->std->dataemissao;
+            $valorTotServicos += $rps->std->valorservicos;
+            $valorTotDeducoes += $rps->std->valordeducoes;
+            $txtRps .= str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $rps->render());
+        }
+
+        $dtInicio = $this->minDate($dt);
+        $dtFim = $this->maxDate($dt);
+        
+        $operation= "TesteEnvioLoteRpsAsync";
+        
+        $content = "<PedidoEnvioLoteRPS "
+            . "xmlns:xsd=\"{$this->nsxsd}\" "
+            . "xmlns:xsi=\"{$this->nsxsi}\" "
+            . "xmlns=\"{$this->wsobj->msgns}\">"
+            . "<Cabecalho xmlns=\"\" Versao=\"{$this->wsobj->version}\">"
+            . $this->remetente
+            . "<transacao>false</transacao>"
+            . "<dtInicio>{$dtInicio}</dtInicio>"
+            . "<dtFim>{$dtFim}</dtFim>"
+            . "<QtdRPS>{$qtdRps}</QtdRPS>"
+            . "<ValorTotalServicos>{$valorTotServicos}</ValorTotalServicos>"
+            . "<ValorTotalDeducoes>{$valorTotDeducoes}</ValorTotalDeducoes>"
+            . "</Cabecalho>"
+            . $txtRps
+            . "</PedidoEnvioLoteRPS>";
+            
+        $content = Signer::sign(
+            $this->certificate,
+            $content,
+            'PedidoEnvioLoteRPS',
+            '',
+            $this->algorithm,
+            [false, false, null, null],
+            'PedidoEnvioLoteRPS'
+        );
+        $content = str_replace(
+            ['<?xml version="1.0"?>', '<?xml version="1.0" encoding="UTF-8"?>'],
+            '',
+            $content
+        );
+        Validator::isValid($content, $this->xsdpath . '/PedidoEnvioLoteRPS_v01.xsd');
+        return $this->send($content, $operation, 'assincrono');
+    }
+    
+    /**
+     * Enviar RSP (SINCRONO)
+     * @param Rps $rpss
+     * @return string
+     */
+    public function envioRpsSincrono(Rps $rps)
+    {
+        $rps->config($this->config);
+        $rps->addCertificate($this->certificate);
+        $txtRps = str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $rps->render());
+               
+        $operation= "EnvioRPS";
+        
+        $content = "<PedidoEnvioRPS "
+            . "xmlns:xsd=\"{$this->nsxsd}\" "
+            . "xmlns:xsi=\"{$this->nsxsi}\" "
+            . "xmlns=\"{$this->wsobj->msgns}\">"
+            . "<Cabecalho xmlns=\"\" Versao=\"{$this->wsobj->version}\">"
+            . $this->remetente
+            . "</Cabecalho>"
+            . $txtRps
+            . "</PedidoEnvioRPS>";
+            
+        $content = Signer::sign(
+            $this->certificate,
+            $content,
+            'PedidoEnvioRPS',
+            '',
+            $this->algorithm,
+            [false, false, null, null],
+            'PedidoEnvioRPS'
+        );
+        $content = str_replace(
+            ['<?xml version="1.0"?>', '<?xml version="1.0" encoding="UTF-8"?>'],
+            '',
+            $content
+        );
+        Validator::isValid($content, $this->xsdpath . '/PedidoEnvioRPS_v01.xsd');
+        return $this->send($content, $operation, 'sincrono');
+    }
+    
+    /**
+     * Enviar Lote de RSP (SINCRONO)
+     * @param array $rpss
+     * @return string
+     */
+    public function envioLoteRpsSincrono(array $rpss = [])
+    {
+        $txtRps = "";
+        $dt = [];
+        $valorTotServicos = 0;
+        $valorTotDeducoes = 0;
+        $qtdRps = count($rpss);
+        foreach ($rpss as $rps) {
+            $rps->config($this->config);
+            $rps->addCertificate($this->certificate);
+            $dt[] = $rps->std->dataemissao;
+            $valorTotServicos += $rps->std->valorservicos;
+            $valorTotDeducoes += $rps->std->valordeducoes;
+            $txtRps .= str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $rps->render());
+        }
+        $dtInicio = $this->minDate($dt);
+        $dtFim = $this->maxDate($dt);
+               
+        $operation= "EnvioLoteRPS";
+        
+        $content = "<PedidoEnvioLoteRPS "
+            . "xmlns:xsd=\"{$this->nsxsd}\" "
+            . "xmlns:xsi=\"{$this->nsxsi}\" "
+            . "xmlns=\"{$this->wsobj->msgns}\">"
+            . "<Cabecalho xmlns=\"\" Versao=\"{$this->wsobj->version}\">"
+            . $this->remetente
+            . "<transacao>false</transacao>"
+            . "<dtInicio>{$dtInicio}</dtInicio>"
+            . "<dtFim>{$dtFim}</dtFim>"
+            . "<QtdRPS>{$qtdRps}</QtdRPS>"
+            . "<ValorTotalServicos>{$valorTotServicos}</ValorTotalServicos>"
+            . "<ValorTotalDeducoes>{$valorTotDeducoes}</ValorTotalDeducoes>"
+            . "</Cabecalho>"
+            . $txtRps
+            . "</PedidoEnvioLoteRPS>";
+            
+        $content = Signer::sign(
+            $this->certificate,
+            $content,
+            'PedidoEnvioLoteRPS',
+            '',
+            $this->algorithm,
+            [false, false, null, null],
+            'PedidoEnvioLoteRPS'
+        );
+        $content = str_replace(
+            ['<?xml version="1.0"?>', '<?xml version="1.0" encoding="UTF-8"?>'],
+            '',
+            $content
+        );
+        Validator::isValid($content, $this->xsdpath . '/PedidoEnvioLoteRPS_v01.xsd');
+        return $this->send($content, $operation, 'sincrono');
+    }
+    
+    /**
+     * Enviar RPS ou Lote de RSP (ASSINCRONO)
+     * @param array $rpss
+     * @return string
+     */
+    public function envioLoteRpsAssincrono(array $rpss = [])
+    {
+        if ($this->config->tpamb == 2) {
+            throw new \Exception('Não existe ambiente de homologação para envio assincrono!');
+        }
+        $txtRps = "";
+        $dt = [];
+        $valorTotServicos = 0;
+        $valorTotDeducoes = 0;
+        $qtdRps = count($rpss);
+        foreach ($rpss as $rps) {
+            $rps->config($this->config);
+            $rps->addCertificate($this->certificate);
+            $dt[] = $rps->std->dataemissao;
+            $valorTotServicos += $rps->std->valorservicos;
+            $valorTotDeducoes += $rps->std->valordeducoes;
+            $txtRps .= str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $rps->render());
+        }
+        $dtInicio = $this->minDate($dt);
+        $dtFim = $this->maxDate($dt);
+               
+        $operation= "EnvioLoteRpsAsync";
+        
+        
+        $content = "<PedidoEnvioLoteRPS "
+            . "xmlns:xsd=\"{$this->nsxsd}\" "
+            . "xmlns:xsi=\"{$this->nsxsi}\" "
+            . "xmlns=\"{$this->wsobj->msgns}\">"
+            . "<Cabecalho xmlns=\"\" Versao=\"{$this->wsobj->version}\">"
+            . $this->remetente
+            . "<transacao>false</transacao>"
+            . "<dtInicio>{$dtInicio}</dtInicio>"
+            . "<dtFim>{$dtFim}</dtFim>"
+            . "<QtdRPS>{$qtdRps}</QtdRPS>"
+            . "<ValorTotalServicos>{$valorTotServicos}</ValorTotalServicos>"
+            . "<ValorTotalDeducoes>{$valorTotDeducoes}</ValorTotalDeducoes>"
+            . "</Cabecalho>"
+            . $txtRps
+            . "</PedidoEnvioLoteRPS>";
+            
+        $content = Signer::sign(
+            $this->certificate,
+            $content,
+            'PedidoEnvioLoteRPS',
+            '',
+            $this->algorithm,
+            [false, false, null, null],
+            'PedidoEnvioLoteRPS'
+        );
+        $content = str_replace(
+            ['<?xml version="1.0"?>', '<?xml version="1.0" encoding="UTF-8"?>'],
+            '',
+            $content
+        );
+        Validator::isValid($content, $this->xsdpath . '/PedidoEnvioLoteRPS_v01.xsd');
+        return $this->send($content, $operation, 'assincrono');
     }
     
     /**

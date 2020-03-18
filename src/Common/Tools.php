@@ -116,13 +116,22 @@ class Tools
      */
     public function send($message, $operation, $mode)
     {
-        $action = "{$this->wsobj->soapns}/ws/". lcfirst($operation);
-        if ($operation == 'TesteEnvioLoteRPS') {
-            $action = "{$this->wsobj->soapns}/ws/testeenvio";
+        switch ($operation) {
+            case 'TesteEnvioLoteRPS':
+                $action = "{$this->wsobj->soapns}/ws/testeenvio";
+                break;
+            case 'EnvioLoteRpsAsync':
+                $action = "{$this->wsobj->soapns}/ws/envioLoteRPSAsync";
+                break;
+            case 'TesteEnvioLoteRpsAsync':
+                $action = "{$this->wsobj->soapns}/ws/testeEnvioLoteRPSAsync";
+                break;
+            default:
+                $action = "{$this->wsobj->soapns}/ws/". lcfirst($operation);
         }
         $modo = "{$mode}_homologacao";
         if ($this->environment === 'producao') {
-            $modo = "{$mode}_homologacao";
+            $modo = "{$mode}_producao";
         }
         $url = $this->wsobj->$modo;
         if (empty($url)) {
@@ -199,7 +208,7 @@ class Tools
      */
     protected function createSoapRequest($message, $operation, $mode)
     {
-        $operation = str_replace('Async', '', $operation);
+        //$operation = str_replace('Async', '', $operation);
         $versionText = "VersaoSchema";
         if ($mode == 'assincrono') {
             $versionText = "versaoSchema";

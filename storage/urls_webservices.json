@@ -2,9 +2,9 @@
     "3550308": {
         "municipio": "São Paulo",
         "uf": "SP",
-        "sincrono_homologacao": "https:\/\/nfe.prefeitura.sp.gov.br\/ws\/lotenfe.asmx",
+        "sincrono_homologacao": "https://testenfe.prefeitura.sp.gov.br/ws/lotenfe.asmx",
         "sincrono_producao": "https:\/\/nfe.prefeitura.sp.gov.br\/ws\/lotenfe.asmx",
-        "assincrono_homologacao": "https:\/\/nfews.prefeitura.sp.gov.br\/lotenfeasync.asmx",
+        "assincrono_homologacao": "",
         "assincrono_producao": "https:\/\/nfews.prefeitura.sp.gov.br\/lotenfeasync.asmx",
         "version": "1",
         "msgns": "http:\/\/www.prefeitura.sp.gov.br\/nfe",
